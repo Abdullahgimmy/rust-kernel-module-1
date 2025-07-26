@@ -1,0 +1,49 @@
+// src/main.rs
+#![no_std]
+#![no_main]
+#![feature(abi_x86_interrupt)]
+
+use core::panic::PanicInfo;
+use x86_64::structures::paging::PageTable;
+
+/// نقطة الدخول الرئيسية للنواة
+#[no_mangle]
+pub extern "C" fn _start() -> ! {
+    // تهيئة النواة
+    init_kernel();
+    
+    // التنفيذ الرئيسي للنواة
+    kernel_main();
+    
+    // لا يجب الوصول إلى هذه النقطة أبداً
+    loop {}
+}
+
+/// تهيئة النواة
+fn init_kernel() {
+    // TODO: تهيئة وحدات النواة الأساسية هنا
+    // - إدارة الذاكرة
+    // - جدول المقاطعات (IDT)
+    // - جدول المهام
+}
+
+/// الدالة الرئيسية للنواة
+fn kernel_main() {
+    // TODO: التنفيذ الرئيسي للنواة
+    // يمكنك هنا:
+    // - بدء جدولة المهام
+    // - تهيئة وحدات إضافية
+    // - بدء shell أو واجهة مستخدم إذا لزم الأمر
+}
+
+/// معالج الذعر (panic handler)
+#[panic_handler]
+fn panic(info: &PanicInfo) -> ! {
+    // TODO: تنفيذ إجراءات الطوارئ عند حدوث ذعر
+    loop {}
+}
+
+/// معالج المقاطعات
+extern "x86-interrupt" fn interrupt_handler(_stack_frame: &mut InterruptStackFrame) {
+    // TODO: معالجة المقاطعات
+}
